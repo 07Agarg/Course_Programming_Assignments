@@ -1,0 +1,6 @@
+Best Regularization Parameter for L2
+1e-06
+
+
+Best Regularization Parameter for L1
+1e-05

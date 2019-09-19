@@ -1,0 +1,28 @@
+Accuracy of each class in Train Set
+Accuracy of class 0 1.0
+Accuracy of class 1 1.0
+Accuracy of class 2 0.9767911200807265
+Accuracy of class 3 0.9641472868217055
+Accuracy of class 4 0.9979591836734694
+Accuracy of class 5 0.9733487833140209
+Accuracy of class 6 0.9990138067061144
+Accuracy of class 7 0.9981308411214953
+Accuracy of class 8 0.9608050847457628
+Accuracy of class 9 0.9734151329243353
+Train Set Accuracy Score-L1 Regularized: 0.9849 
+
+
+
+Accuracy of each class in Test Set
+Accuracy of class 0 0.9551020408163265
+Accuracy of class 1 0.9665198237885463
+Accuracy of class 2 0.8081395348837209
+Accuracy of class 3 0.8435643564356435
+Accuracy of class 4 0.8788187372708758
+Accuracy of class 5 0.8038116591928252
+Accuracy of class 6 0.906054279749478
+Accuracy of class 7 0.8832684824902723
+Accuracy of class 8 0.8203285420944558
+Accuracy of class 9 0.8146679881070367
+Test Set Accuracy Score-L1 Regularized: 0.8696 
+Testing Using L1 Regularization
