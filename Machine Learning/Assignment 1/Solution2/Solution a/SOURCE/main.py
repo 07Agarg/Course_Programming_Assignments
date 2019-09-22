@@ -10,7 +10,7 @@ import data
 import model
 import model_L1
 import model_L2
-
+import utils
 
 if __name__ == "__main__":
     data = data.Data()
@@ -18,10 +18,10 @@ if __name__ == "__main__":
     data.read(config.TRAIN_PATH)
     print("train data read successfully")
     
-    """
+    #"""
     #Without Regularization
     model = model.Model(data.size[1])
-    model.train(data)
+    acc_list, error_list = model.train(data)
     print("Training completed without Regularization")
     print("Plot Accuracy")
     model.plot_accuracy()
@@ -32,11 +32,13 @@ if __name__ == "__main__":
     print("Test Data Read Successfully")
     model.test(data)
     print("Predicted test values!!!!")
-    
+    #"""
     
     #L1 Regularization
+    data.read(config.TRAIN_PATH)
+    print("train data read successfully")
     model_l1 = model_L1.Model(data.size[1])
-    model_l1.train(data)
+    acc_list_L1, error_list_L1 = model_l1.train(data)
     print("Training Completed using L1 Regularization")
     print("Plot Accuracy")
     model_l1.plot_accuracy("L1 Regularization")
@@ -48,10 +50,12 @@ if __name__ == "__main__":
     model_l1.test(data)
     print("Predicted test values using L1 Regularization!!!!")
     
-    """
+    #"""
     #L2 Regularization
+    data.read(config.TRAIN_PATH)
+    print("train data read successfully")
     model_l2 = model_L2.Model(data.size[1])
-    model_l2.train(data)
+    acc_list_L2, error_list_L2 = model_l2.train(data)
     print("Training Completed using L2 Regularization")
     print("Plot Accuracy")
     model_l2.plot_accuracy("L2 Regularization")
@@ -62,4 +66,7 @@ if __name__ == "__main__":
     print("Test Data Read Successfully")
     model_l2.test(data)
     print("Predicted test values using L2 Regularization!!!!")
+    #"""
+    utils.plot_accuracy(acc_list, acc_list_L1, acc_list_L2)
+    utils.plot_error(error_list, error_list_L1, error_list_L2)
     

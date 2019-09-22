@@ -12,6 +12,15 @@ import numpy as np
 image_size = 28
 num_images = 5
 
+a = np.array([[1, 2], [3, 4]])
+b = np.array([[5, 6], [7, 8]])
+print(a*b)
+print(np.multiply(a, b))
+print(np.dot(a, b))
+print(np.matmul(a, b))
+print(np.sum(np.multiply(a, b)))
+
+"""
 a = np.array([[1, 2, 3], [3, 4, 5], [6, 7, 8]])
 b = np.sum(a)
 
@@ -20,6 +29,7 @@ print(TPR)
 FPR = (np.sum(a[:, 0]) - a[0][0])/(np.sum(a) - np.sum(a[0]))
 print("Den ", np.sum(a) - np.sum(a[0]))
 print(FPR)
+"""
 #for i in range(a.shape[0]):
 #    l = (a[i][i]/np.sum(axis))
 #with open(os.path.join(config.DATA_DIR, 'train-images-idx3-ubyte.gz'), 'rb') as f, gzip.GzipFile(fileobj = f) as bytestream:

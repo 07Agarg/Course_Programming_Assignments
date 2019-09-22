@@ -26,7 +26,7 @@ class Model():
         t = Y_predict - Y
         n = Y.shape[0]        
         gradient = (np.dot(np.transpose(X), t)) + (config.LAMBDA_L2/n)*(self.W)
-        gradient[0] = gradient[0] - ((config.LAMBDA_L2/n)*gradient[0])
+        gradient[0] = gradient[0] - ((config.LAMBDA_L2/n)*self.W[0])
         self.W = self.W - (config.LEARNING_RATE/n)*(gradient)
     
     def lossFn(self, Y_train, Y_predict):

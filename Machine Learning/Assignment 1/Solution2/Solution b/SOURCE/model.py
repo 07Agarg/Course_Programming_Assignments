@@ -11,6 +11,7 @@ from sklearn.metrics import roc_curve
 from sklearn.metrics import accuracy_score, confusion_matrix
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import label_binarize
+from sklearn.linear_model import SGDClassifier
 
 class Model():
     
@@ -27,12 +28,30 @@ class Model():
             acc = cmatrix[i][i]/cmatrix_sum[i]
             print("Accuracy of class {} {}".format(i, acc))
     
-    def LogisticReg_L1_train(self, data):
-        print("L1 Logistic Regression")
+    def Logistic_sgdclassifier_L1train(self, data):
         X_train, y_train = data.get_train()
         X_train = X_train.reshape(X_train.shape[0], -1)
+        y_train = y_train.ravel()
+        sgd = SGDClassifier(loss = 'log', penalty = 'l1', max_iter = 10)
+        self.classifier = sgd.fit(X_train, y_train)
+        y_predict = self.classifier.predict(X_train)
+        y1 = self.classifier.predict_proba(X_train)
+        for i in range(10):
+            print("y1 ", y1[i])
+        cm = confusion_matrix(y_train, y_predict)
+        self.cm = cm
+        print("Confusion Matrix For Train set")
+        print(cm)
+        self.class_accuracy(cm, "Train")
+        train_accuracy = self.classifier.score(X_train, y_train)
+        print("Train Set Accuracy Score-L1 Regularized: {} ".format(train_accuracy))
+        
+    
+    def LogisticReg_L1_train(self, data, solver):
+        print("L1 Logistic Regression")
+        X_train, y_train = data.get_train()
         #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=0)
-        lr = LogisticRegression(penalty = 'l1', max_iter = 100, multi_class = 'ovr')
+        lr = LogisticRegression(penalty = 'l1', max_iter = 100, multi_class = 'ovr', solver = solver)   #default C = 1.0 which is inverse of regualrization strnegth.
         self.classifier = lr.fit(X_train, y_train)
         y_predict = self.classifier.predict(X_train)
         y1 = self.classifier.predict_proba(X_train)
@@ -49,7 +68,6 @@ class Model():
         
     def LogisticReg_L1_test(self, data):
         X_test, y_test = data.get_test()
-        X_test = X_test.reshape(X_test.shape[0], -1)
         y_predict = self.classifier.predict(X_test)
         self.y_predict = y_predict
         cm = confusion_matrix(y_test, y_predict)
@@ -59,11 +77,10 @@ class Model():
         self.class_accuracy(cm, "Test")
         print("Test Set Accuracy Score-L1 Regularized: {} ".format(accuracy_score(y_test, y_predict)))
         
-    def LogisticReg_L2_train(self, data):
+    def LogisticReg_L2_train(self, data, solver):
         print("L2 Logistic Regression")
         X_train, y_train = data.get_train()
-        X_train = X_train.reshape(X_train.shape[0], -1)        
-        lr = LogisticRegression(penalty = 'l2', max_iter = 100, multi_class = 'ovr')
+        lr = LogisticRegression(penalty = 'l2', max_iter = 100, multi_class = 'ovr', solver = solver, tol=0.1)   #default C = 1.0 which is inverse of regualrization strnegth. 
         self.classifier = lr.fit(X_train, y_train)
         cm = confusion_matrix(y_train, self.classifier.predict(X_train))
         #print("Confusion Matrix For Train set")
@@ -75,7 +92,6 @@ class Model():
         
     def LogisticReg_L2_test(self, data):
         X_test, y_test = data.get_test()
-        X_test = X_test.reshape(X_test.shape[0], -1)
         y_predict = self.classifier.predict_proba(X_test)
         self.predict = y_predict
         cm = confusion_matrix(y_test, self.classifier.predict(X_test))

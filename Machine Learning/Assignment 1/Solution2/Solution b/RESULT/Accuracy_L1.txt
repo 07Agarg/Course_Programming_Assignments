@@ -1,3 +1,4 @@
+Observations when solver ='liblinear', max_iter = 100, number_of_samples=10000
 Accuracy of each class in Train Set
 Accuracy of class 0 1.0
 Accuracy of class 1 1.0
@@ -11,8 +12,6 @@ Accuracy of class 8 0.9608050847457628
 Accuracy of class 9 0.9734151329243353
 Train Set Accuracy Score-L1 Regularized: 0.9849 
 
-
-
 Accuracy of each class in Test Set
 Accuracy of class 0 0.9551020408163265
 Accuracy of class 1 0.9665198237885463
@@ -25,4 +24,32 @@ Accuracy of class 7 0.8832684824902723
 Accuracy of class 8 0.8203285420944558
 Accuracy of class 9 0.8146679881070367
 Test Set Accuracy Score-L1 Regularized: 0.8696 
-Testing Using L1 Regularization
+
+Observations when solver ='saga', max_iter=100, number_of_samples=60000
+Accuracy of each class in Train Set
+Accuracy of class 0 0.9724249797242498
+Accuracy of class 1 0.9682986967241987
+Accuracy of class 2 0.8743961352657005
+Accuracy of class 3 0.8737502450499902
+Accuracy of class 4 0.9220004116073266
+Accuracy of class 5 0.8666222814025744
+Accuracy of class 6 0.9495051504746516
+Accuracy of class 7 0.9153623188405797
+Accuracy of class 8 0.8323007021891781
+Accuracy of class 9 0.8626704089815558
+Train Set Accuracy Score-L1 Regularized: 0.90502 
+Training Using L1 Regularization
+Test Data read Successfully
+Confusion Matrix For test set
+Accuracy of each class in Test Set
+Accuracy of class 0 0.9785714285714285
+Accuracy of class 1 0.9744493392070485
+Accuracy of class 2 0.872093023255814
+Accuracy of class 3 0.8960396039603961
+Accuracy of class 4 0.9287169042769857
+Accuracy of class 5 0.8497757847533632
+Accuracy of class 6 0.9405010438413361
+Accuracy of class 7 0.9036964980544747
+Accuracy of class 8 0.8305954825462012
+Accuracy of class 9 0.8543111992071358
+Test Set Accuracy Score-L1 Regularized: 0.9041 

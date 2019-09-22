@@ -8,13 +8,16 @@ import os
 import config
 import numpy as np
 import matplotlib.pyplot as plt
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_curve
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 class Model():
     
     def __init__(self, size):
         self.size = size
         self.W = np.zeros((self.size, 1))
+#        self.W = np.random.randn(self.size).reshape(self.size, 1)        
         self.n_examples = 0
         self.loss_list = []
         self.accuracy_list = []
@@ -53,7 +56,7 @@ class Model():
         for epoch in range(config.NUM_EPOCHS):
             p = self.forward(X_train)
             loss = self.lossFn(Y_train, p)
-            print("Epoch: {}, Loss: {} ".format(epoch, loss))
+            #print("Epoch: {}, Loss: {} ".format(epoch, loss))
             self.backward(X_train, Y_train, p)
             self.loss_list.append(loss)
             self.calculate_accuracy(X_train, Y_train, "None")
@@ -63,6 +66,7 @@ class Model():
         self.calculate_accuracy(X_train, Y_train, "Train")
         X_val = np.c_[np.ones(val_size), X_val]
         self.calculate_accuracy(X_val, Y_val, "Validation")
+        return self.accuracy_list, self.loss_list
         
     def test(self, data):
         print("Start testing")
@@ -101,4 +105,5 @@ class Model():
         plt.title('Error vs Epochs Plot')
         plt.savefig(config.OUT_DIR + 'Error_Plot.jpg')
         plt.show()
+        
         

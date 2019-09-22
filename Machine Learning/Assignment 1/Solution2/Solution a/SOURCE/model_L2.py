@@ -14,6 +14,7 @@ class Model():
     def __init__(self, size):
         self.size = size
         self.W = np.zeros((self.size, 1))
+        #self.W = np.random.randn(self.size).reshape(self.size, 1)
         self.n_examples = 0
         self.loss_list = []
         self.accuracy_list = []
@@ -30,7 +31,7 @@ class Model():
         t = p - Y
         n = Y.shape[0]
         gradient = (np.dot(np.transpose(X), t)) + (config.LAMBDA/n)*(self.W)
-        gradient[0] = gradient[0] - ((config.LAMBDA/n)*gradient[0])
+        gradient[0] = gradient[0] - ((config.LAMBDA/n)*self.W[0])
         #print(gradient)
         self.W = self.W - (config.LEARNING_RATE/self.n_examples)*(gradient)
     
@@ -54,7 +55,7 @@ class Model():
         for epoch in range(config.NUM_EPOCHS):
             p = self.forward(X_train)
             loss = self.lossFn(Y_train, p)
-            print("Epoch: {}, Loss: {} ".format(epoch, loss*100))
+            #print("Epoch: {}, Loss: {} ".format(epoch, loss))
             self.backward(X_train, Y_train, p)
             self.loss_list.append(loss[0][0])
             self.calculate_accuracy(X_train, Y_train, "None")
@@ -65,6 +66,7 @@ class Model():
         self.calculate_accuracy(X_train, Y_train, "Train")
         X_val = np.c_[np.ones(val_size), X_val]
         self.calculate_accuracy(X_val, Y_val, "Validation")
+        return self.accuracy_list, self.loss_list
         
     def test(self, data):
         print("Start testing")

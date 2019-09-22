@@ -9,6 +9,7 @@ import config
 import os
 import numpy as np
 import gzip
+from sklearn.preprocessing import StandardScaler
 
 class Data:
     def __init__(self):
@@ -31,6 +32,7 @@ class Data:
         data = data.reshape(num, config.IMAGE_SIZE, config.IMAGE_SIZE, 1)
         self.dataX = data
         self.size = self.dataX.shape[0]
+        
         #print("Size f_input ", self.dataX.shape)
         #Read labels            
         f_labels.read(8)
@@ -38,6 +40,9 @@ class Data:
         labels = np.frombuffer(buf, dtype = np.uint8).astype(np.int64)
         labels = labels.reshape(num, 1)
         self.dataY = labels
+        scaler = StandardScaler()
+        self.dataX = self.dataX.reshape(self.dataX.shape[0], -1)        
+        self.dataX = scaler.fit_transform(self.dataX)
     
     def read(self, inputs, labels, train = True):
         f_input = gzip.open(os.path.join(config.DATA_DIR, inputs),'r')
@@ -50,7 +55,9 @@ class Data:
             self.read_buffer(f_input, f_labels, config.NUM_TEST, train)
     
     def get_train(self):
-        return self.dataX[:10000], self.dataY[:10000]
+        #return self.dataX[:10000], self.dataY[:10000]
+        return self.dataX, self.dataY
     
     def get_test(self):
-        return self.dataX[:10000], self.dataY[:10000]
+        #return self.dataX[:10000], self.dataY[:10000]
+        return self.dataX, self.dataY

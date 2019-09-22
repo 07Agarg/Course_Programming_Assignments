@@ -20,8 +20,11 @@ L1_WEIGHTS = "L1_Weights.txt"
 L2_WEIGHTS = "L2_Weights.txt"
 
 #HyperParameters
-NUM_EPOCHS = 2500 
-LEARNING_RATE = 0.1
-LAMBDA = 0.01
+NUM_EPOCHS = 200
+LEARNING_RATE = 1
+LAMBDA = 1
+#LAMBDA_L1 = 1
+#LAMBDA_L2 = 1
+
 
 SEED = 128
