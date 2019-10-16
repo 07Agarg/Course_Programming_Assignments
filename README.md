@@ -19,4 +19,8 @@ This repository contains Programming Assignments :
               * Transformation, Inverse Transformation, Interpolation
       2. Assignment 2:
               * Histogram Matching
-              * Unsharp Masking
+              * Unsharp Masking using Box Filter
+      3. Assignment 3:
+              * Convolution via DFT 
+              * Unsharp masking via DFT.
+              
