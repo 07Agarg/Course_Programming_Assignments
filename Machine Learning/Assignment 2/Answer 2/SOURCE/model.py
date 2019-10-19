@@ -7,7 +7,7 @@ Created on Fri Oct 18 05:02:34 2019
 
 import config
 import numpy as np
-from sklearn.svm import SVC
+#from sklearn.svm import SVC
 import matplotlib.pyplot as plt
 from sklearn.svm import LinearSVC
 from sklearn.metrics import f1_score
@@ -22,57 +22,43 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 class Model():
     
     def __init__(self):
-        self.C = None
-        self.gamma = None
-        self.kernel = None
         self.svc_clf = None
         self.naivebayes_clf = None
         self.dec_tree_clf = None
     
-    def class_accuracy(self, cmatrix, string):
-        print("Accuracy of each class in {} Set".format(string))
-        cmatrix_sum = np.sum(cmatrix, axis = 1)
-        for i in range(config.CLASSES):
-            acc = cmatrix[i][i]/cmatrix_sum[i]
-            print("Accuracy of class {} {}".format(i, acc))
-    
-    def svc_train(self, data):
-        X_train, Y_train = data.get_data()
-        #X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size = 0.2, random_state=0)
-        self.svc_clf = SVC()
+    def linearsvc_train(self, data):
+        X, Y = data.get_data()
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+        self.svc_clf = LinearSVC()
         self.svc_clf.fit(X_train, Y_train)
         train_accuracy = self.svc_clf.score(X_train, Y_train)
         print("Train Set Accuracy Score (SVM): {} ".format(train_accuracy))
-        
-    def svc_test(self, data):
-        X_test, Y_test = data.get_data()
         Y_predict = self.svc_clf.predict(X_test)
         print("Test Set Accuracy Score (SVM): {} ".format(accuracy_score(Y_test, Y_predict)))
+        print("F1 Score (Linear SVM): {} ".format(f1_score(Y_test, Y_predict)))
         
     def naive_bayes_train(self, data):
-        X_train, Y_train = data.get_data()
+        X, Y = data.get_data()
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
         self.naivebayes_clf = GaussianNB()
         self.naivebayes_clf.fit(X_train, Y_train)
         train_accuracy = self.naivebayes_clf.score(X_train, Y_train)
         print("Train Set Accuracy Score (Naive Bayes): {} ".format(train_accuracy))
-    
-    def naive_bayes_test(self, data):
-        X_test, Y_test = data.get_data()
         Y_predict = self.naivebayes_clf.predict(X_test)
         print("Test Set Accuracy Score (Naive Bayes): {} ".format(accuracy_score(Y_test, Y_predict)))
-    
+        print("F1 Score (Naive Bayes): {} ".format(f1_score(Y_test, Y_predict)))
+        
     def decision_trees_train(self, data):
-        X_train, Y_train = data.get_data()
+        X, Y = data.get_data()
+        X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
         self.dec_tree_clf = DecisionTreeClassifier()
         self.dec_tree_clf.fit(X_train, Y_train)
         train_accuracy = self.dec_tree_clf.score(X_train, Y_train)
         print("Train Set Accuracy Score (Naive Bayes): {} ".format(train_accuracy))
-    
-    def decision_trees_test(self, data):
-        X_test, Y_test = data.get_data()
         Y_predict = self.dec_tree_clf.predict(X_test)
         print("Test Set Accuracy Score (Naive Bayes): {} ".format(accuracy_score(Y_test, Y_predict)))
-    
+        print("F1 Score (Decision tree classifier): {} ".format(f1_score(Y_test, Y_predict)))
+        
     def plot_roc(self, y_test, y_score):
         print("Plot ROC Curve for Each Class")
         fpr = dict()
