@@ -20,12 +20,14 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 class Model():
     
     def __init__(self):
-        self.C = None
-        self.gamma = None
-        self.kernel = None
+        self.best_C = None
+        self.best_gamma = None
+        self.best_kernel = None
+        self.best_estimator = None
         self.grid = None
+        self.svm = None
     
-    def svc_train(self, data):
+    def gridsvc_train(self, data):
         params = {'C':[0.1, 1, 10],
                   'gamma':[0.1, 1, 10]}
         #'kernel': 'rbf'}
@@ -37,12 +39,25 @@ class Model():
         print("SVM best estimator ", self.grid.best_estimator_)
         train_accuracy = self.grid.score(X_train, Y_train)
         print("Train Set Accuracy Score: {} ".format(train_accuracy))
-        print(self.grid.support_)
+        self.best_C = self.grid.best_estimator_.C
+        self.best_gamma = self.grid.best_estimator_.gamma
+        self.best_kernel = self.grid.best_estimator_.kernel
+        self.best_estimator = self.grid.best_estimator_
         
-    def svc_test(self, data):
+    def gridsvc_test(self, data):
         X_test, Y_test = data.get_data()
         Y_predict = self.grid.predict(X_test)
         print("Test Set Accuracy Score: {} ".format(accuracy_score(Y_test, Y_predict)))
+        
+    def svc_train(self, data):
+        print("Best gamma: ", self.best_gamma)
+        self.svm = SVC(C = self.best_C, kernel = self.best_kernel ,gamma = self.best_gamma)
+        #self.svc_train = SVC(self.best_estimator)
+        X_train, Y_train = data.get_data()
+        self.svm.fit(X_train, Y_train)
+        support_vector_indices = self.svm.support_
+        print(support_vector_indices.shape)
+        
         
 #    def save_tofile(self):
 #        #Store Regularization Paramter in File

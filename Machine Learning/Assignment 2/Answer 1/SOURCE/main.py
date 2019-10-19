@@ -8,7 +8,6 @@ Created on Fri Oct 18 02:57:09 2019
 import config
 import data
 import model
-import utils
 
 if __name__ == "__main__":
     data = data.Data()
@@ -21,11 +20,19 @@ if __name__ == "__main__":
     print("data read successfully")
     
     model = model.Model()
-    model.svc_train(data)
+    model.gridsvc_train(data)
     print("Model trained")
+#    data.read(config.TEST_FILE)
+#    model.gridsvc_test(data)
+#    print("model tested")
     
-    data.read(config.TEST_FILE)
-    model.svc_test(data)
+    #data.read(config.T)
+    model.svc_train(data)
+    print("Model trained with best estimators")
+#    model.svc_test(data)
+#    print("Model tested")
+    
+    
 #    #Model object
 #    model = model.Model()        
 #    for i in range(config.K_FOLDS):
