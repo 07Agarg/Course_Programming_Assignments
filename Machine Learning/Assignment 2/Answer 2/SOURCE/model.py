@@ -32,10 +32,12 @@ class Model():
         self.svc_clf = LinearSVC()
         self.svc_clf.fit(X_train, Y_train)
         train_accuracy = self.svc_clf.score(X_train, Y_train)
-        print("Train Set Accuracy Score (SVM): {} ".format(train_accuracy))
+        print("Train Set Accuracy Score (Linear SVM): {} ".format(train_accuracy))
         Y_predict = self.svc_clf.predict(X_test)
-        print("Test Set Accuracy Score (SVM): {} ".format(accuracy_score(Y_test, Y_predict)))
+        print("Test Set Accuracy Score (Linear SVM): {} ".format(accuracy_score(Y_test, Y_predict)))
         print("F1 Score (Linear SVM): {} ".format(f1_score(Y_test, Y_predict)))
+        print("Plot ROC Curve for (Linear SVM Classifier)")
+        self.plot_roc(Y_test, Y_predict, "Linear SVM")
         
     def naive_bayes_train(self, data):
         X, Y = data.get_data()
@@ -47,34 +49,37 @@ class Model():
         Y_predict = self.naivebayes_clf.predict(X_test)
         print("Test Set Accuracy Score (Naive Bayes): {} ".format(accuracy_score(Y_test, Y_predict)))
         print("F1 Score (Naive Bayes): {} ".format(f1_score(Y_test, Y_predict)))
+        print("Plot ROC Curve for (Naive Bayes Classifier)")
+        self.plot_roc(Y_test, Y_predict, "Naive Bayes")
         
     def decision_trees_train(self, data):
         X, Y = data.get_data()
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
-        self.dec_tree_clf = DecisionTreeClassifier()
+        self.dec_tree_clf = DecisionTreeClassifier(max_depth = config.DECISION_TREE_DEPTH)
         self.dec_tree_clf.fit(X_train, Y_train)
         train_accuracy = self.dec_tree_clf.score(X_train, Y_train)
-        print("Train Set Accuracy Score (Naive Bayes): {} ".format(train_accuracy))
+        print("Train Set Accuracy Score (Decision tree classifier): {} ".format(train_accuracy))
         Y_predict = self.dec_tree_clf.predict(X_test)
-        print("Test Set Accuracy Score (Naive Bayes): {} ".format(accuracy_score(Y_test, Y_predict)))
+        print("Test Set Accuracy Score (Decision tree classifier): {} ".format(accuracy_score(Y_test, Y_predict)))
         print("F1 Score (Decision tree classifier): {} ".format(f1_score(Y_test, Y_predict)))
+        print("Plot ROC Curve for (Decision tree classifier)")
+        self.plot_roc(Y_test, Y_predict, "Decision Tree")
         
-    def plot_roc(self, y_test, y_score):
-        print("Plot ROC Curve for Each Class")
+    def plot_roc(self, y_test, y_score, string):
         fpr = dict()
         tpr= dict()
-        for i in range(config.CLASSES):
-            fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
+        #for i in range(config.CLASSES):
+        fpr, tpr, _ = roc_curve(y_test, y_score)
         plt.figure()
-        for i in range(config.CLASSES):
-            plt.plot(fpr[i], tpr[i], label = 'Class - ' + str(i))
+        #for i in range(config.CLASSES):
+        plt.plot(fpr, tpr)
         plt.xlim([0.0, 1.0])
         plt.ylim([0.0, 1.05])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title('ROC Plot for All Classes')
+        plt.title('ROC Plot '+string)
         plt.legend(loc='lower right')
-        plt.savefig(config.OUT_DIR + 'ROC_PLOT.jpg')
+        plt.savefig(config.OUT_DIR + 'ROC_PLOT '+string+".jpg")
         plt.show()
     
 #    def LogisticReg_L1_train(self, data, solver):

@@ -21,23 +21,14 @@ if __name__ == "__main__":
     #build model 
     model = model.Model()
     #Train using SVM CLassifier
-#    model.linearsvc_train(data)
-#    print("SVM trained model")
+    model.linearsvc_train(data)
+    print("SVM trained model")
     #Train using Gaussian Naive Bayes Classifier
-#    model.naive_bayes_train(data)
-#    print("Naive Bayes trained model")
+    model.naive_bayes_train(data)
+    print("Naive Bayes trained model")
 #    #Train using Decision trees Classifier
     model.decision_trees_train(data)
     print("Decision Trees trained model")
-    
-#    #Read Test File
-#    data.read(config.TEST_FILE)
-#    #Test using SVC
-#    model.svc_test(data)
-#    #Test using Naive Bayes
-#    model.naive_bayes_test(data)
-#    #Test using Decision Trees Classifier
-#    model.decision_trees_test(data)
 
 #    train = train_data.decode().split()
 #    for i in range(np.shape(train)[0]):

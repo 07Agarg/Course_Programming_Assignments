@@ -16,3 +16,5 @@ OUT_DIR = os.path.join(ROOT_DIR, 'RESULT/')
 INPUT_FILE_PATH = "wdbc.data"
 
 SEED = 42
+
+DECISION_TREE_DEPTH = 10
