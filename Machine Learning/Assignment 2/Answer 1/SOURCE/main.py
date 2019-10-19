@@ -2,7 +2,7 @@
 """
 Created on Fri Oct 18 02:57:09 2019
 
-@author: ashima
+@author: Ashima
 """
 
 import config
