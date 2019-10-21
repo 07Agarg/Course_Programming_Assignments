@@ -27,3 +27,11 @@ TEST_FILE = "test_batch"
 K_FOLDS = 5
 
 SEED = 128
+
+TRAIN_SIZE = 50000
+TEST_SIZE = 10000
+CHANNELS = 3
+IMG_SIZE = 32
+HOG_FEATURES = 144           ##Convert 32*32*3 (1024) to 324 feature vector
+
+SHRINK_SIZE = 16

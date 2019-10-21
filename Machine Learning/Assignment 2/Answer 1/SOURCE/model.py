@@ -4,11 +4,12 @@ Created on Fri Oct 18 02:57:09 2019
 
 @author: Ashima
 """
-
+import time
 import config
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
+from sklearn.model_selection import ShuffleSplit
 from sklearn.metrics import roc_curve
 from sklearn.linear_model import Ridge, Lasso
 from sklearn.model_selection import GridSearchCV
@@ -28,21 +29,23 @@ class Model():
         self.svm = None
     
     def gridsvc_train(self, data):
-        params = {'C':[0.1, 1, 10],
-                  'gamma':[0.1, 1, 10]}
+        params = {'C':[0.1, 1, 10]}
+        #'gamma':[0.1, 1, 10]}
         #'kernel': 'rbf'}
         X_train, Y_train = data.get_data()
+        start_time = time.time()
         model = SVC()
-        self.grid = GridSearchCV(estimator = model, param_grid = params)        #Default Value cv = 3
+        self.grid = GridSearchCV(estimator = model, param_grid = params, cv = 2, n_jobs = -1)        #Default Value cv = 3
         self.grid.fit(X_train, Y_train)
         print("SVM best score ", self.grid.best_score_)
         print("SVM best estimator ", self.grid.best_estimator_)
-        train_accuracy = self.grid.score(X_train, Y_train)
-        print("Train Set Accuracy Score: {} ".format(train_accuracy))
+        print("Train Set Accuracy Score: {} ".format(self.grid.best_score_))
         self.best_C = self.grid.best_estimator_.C
         self.best_gamma = self.grid.best_estimator_.gamma
         self.best_kernel = self.grid.best_estimator_.kernel
         self.best_estimator = self.grid.best_estimator_
+        end_time = time.time()
+        print("Model training time: {} sec".format(end_time - start_time))
         
     def gridsvc_test(self, data):
         X_test, Y_test = data.get_data()
@@ -51,13 +54,12 @@ class Model():
         
     def svc_train(self, data):
         print("Best gamma: ", self.best_gamma)
-        self.svm = SVC(C = self.best_C, kernel = self.best_kernel ,gamma = self.best_gamma)
+        self.svm = SVC(C = self.best_C, kernel = self.best_kernel, gamma = self.best_gamma)
         #self.svc_train = SVC(self.best_estimator)
         X_train, Y_train = data.get_data()
         self.svm.fit(X_train, Y_train)
         support_vector_indices = self.svm.support_
         print(support_vector_indices.shape)
-        
         
 #    def save_tofile(self):
 #        #Store Regularization Paramter in File

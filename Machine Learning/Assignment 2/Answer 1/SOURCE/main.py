@@ -19,16 +19,39 @@ if __name__ == "__main__":
     data.read(config.TRAIN_FILE5)
     print("data read successfully")
     
+    #data.preprocess_data_hog(config.TRAIN_SIZE)
+    #print("preprocessing done using HOG")
+    
+    data.preprocess_data_shrink(config.TRAIN_SIZE)
+    print("preprocessing done without HOG")
+    
     model = model.Model()
+    
     model.gridsvc_train(data)
-    print("Model trained")
-#    data.read(config.TEST_FILE)
-#    model.gridsvc_test(data)
-#    print("model tested")
+    print("grid search done")
+#    print("Model trained")
+    
+    
+    data.read_test(config.TEST_FILE)
+    data.preprocess_data(config.TEST_SIZE)
+    model.gridsvc_test(data)
+    print("model tested")
+    
     
     #data.read(config.T)
-    model.svc_train(data)
-    print("Model trained with best estimators")
+    #model.svc_train(data)
+    #print("Model trained with best estimators")
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 #    model.svc_test(data)
 #    print("Model tested")
     
