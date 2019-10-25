@@ -1,3 +1,5 @@
+%%Name: Ashima 
+%%Roll No: PhD19003
 close all
 clear all
 clc
@@ -45,7 +47,7 @@ C =0.001:.04:4;err=zeros(1,length(C));
 lambda = 0.01;
 %%
 for i = 1:length(C)
-    F = conj(H).*G./(abs(H).^2 + C(i) + lambda*(abs(Hp).^2 + C(i)));
+    F = conj(H).*G./(abs(H).^2 + C(i) + lambda .* (abs(Hp).^2) .* ((abs(H).^2) + C(i)));
     f1 = real(ifft2(F));
     fim = f1(1:256,1:256); %5 best restored image
     mserestore = mean(mean((fim-double(f)).^2));
@@ -54,7 +56,7 @@ end
 
 %% Show best restored constrained
 [val,ind] = min(errconst);
-F = conj(H).*G./(abs(H).^2+C(ind) + lambda*(abs(Hp).^2 + C(ind)));
+F = conj(H).*G./(abs(H).^2 + C(ind) + lambda * (abs(Hp).^2) * ((abs(H).^2) + C(ind)));
 f1 = real(ifft2(F));
 fim = f1(1:256,1:256); %5 best restored image
 figure,imshow(fim,[])
