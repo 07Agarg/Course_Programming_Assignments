@@ -5,7 +5,11 @@ This repository contains Programming Assignments :
       1. Assignment 1: 
              * Linear Regression
              * Logistic Regression
-         
+      2. Assignment 2:
+            * SVM
+            * Gaussian Naive Bayes
+            * Decision Trees
+            * Comparison Plots
 
 - ### Artificial Intelligence
       1. Assignment 1:
@@ -23,4 +27,7 @@ This repository contains Programming Assignments :
       3. Assignment 3:
               * Convolution via DFT 
               * Unsharp masking via DFT.
+      4. Assignment 4:
+              * Adaptive Filtering
+              * Weiner Filtering, Least Squares Filtering
               
