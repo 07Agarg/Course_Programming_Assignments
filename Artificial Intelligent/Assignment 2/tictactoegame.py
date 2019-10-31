@@ -76,9 +76,9 @@ class tictactoe:
     
     def allocate_reward(self, p1, p2):
         result = self.checkWinDraw()
-        if result == -1:
-            p1.backpropogate_reward(0)
-            p2.backpropogate_reward(1)
+        if result == -1:                                #Result = -1 if player 2 wins, +1 if player 1 wins
+            p1.backpropogate_reward(0)                  #If player 2 wins, feed reward 0 to player 1, feed reward to 1 to player 2
+            p2.backpropogate_reward(1)                  #Vice versa is also true   
         elif result == 1:
             p1.backpropogate_reward(1)
             p2.backpropogate_reward(0)
@@ -136,6 +136,7 @@ class tictactoe:
     def testPlay(self, p1, p2):
         while not self.done:
             locs = self.findVacantLoc()
+            print("PlayerNum: ", self.playerNum)
             action = p1.nextAction(locs, self.board, self.playerNum)
             print("current action: ", action)
             self.move(action)
@@ -148,7 +149,7 @@ class tictactoe:
                     print("Match Draws!")
             else:
                 locs = self.findVacantLoc()
-                action = p2.nextAction(locs)
+                action = p2.nextAction(locs, self.board, self.playerNum)
                 self.move(action)
                 self.display()
                 win = self.checkWinDraw()
@@ -158,20 +159,20 @@ class tictactoe:
                     elif win == 0:
                         print("Match Draws!")
             
-            
-            
 class Player:
-    def __init__(self, exp_rate):
+    def __init__(self, exp_rate, train):
         self.states = []
         self.state_value = {}
         self.exploration_rate = exp_rate
         self.decay_rate = 0.999
-        self.learning_rate = 0.2
+        self.learning_rate = 0.5
         self.gamma= 0.9
+        self.train = train
         
     def addstate(self, board):
-        boardkey = str(board.reshape(3*3))
-        self.states.append(boardkey)
+        if self.train:
+            boardkey = str(board.reshape(3*3))
+            self.states.append(boardkey)
         
     def reset(self):
         self.states = []
@@ -187,64 +188,62 @@ class Player:
         file.close()
         
     def nextAction(self, locations, board, playerNum):
-        offset = np.random.uniform(0, 1)
-        if offset <= self.exploration_rate:
-            #Exploration 
-            action = locations[np.random.choice(len(locations))]
-        else:
-            #Exploitation 
-            new_board = board.copy()
-            max_value = -99999
-            value = 0
-            for loc in locations:
-                new_board[loc[0]][loc[1]] = playerNum
-                boardkey = str(new_board.reshape(3*3))
-                if self.state_value.get(boardkey):
-                    if value >= max_value:
-                        value = max_value 
+        if self.train:
+            offset = np.random.uniform(0, 1)            #self.exploration_rate <= 0.3 explore, else exploitation
+            if offset <= self.exploration_rate:
+                #Exploration 
+                action = locations[np.random.choice(len(locations))]
+            else:
+                #Exploitation 
+                new_board = board.copy()
+                max_value = -99999
+                value = 0
+                for loc in locations:
+                    new_board[loc[0]][loc[1]] = playerNum
+                    boardkey = str(new_board.reshape(3*3))
+                    if self.state_value.get(boardkey):
+                        if value >= max_value:
+                            value = max_value 
+                            action = loc
+                    else:
                         action = loc
-                else:
-                    action = loc
-                        
-        return action
-    
-    def backpropogate_reward(self, reward):
-        for state in reversed(self.states):
-            if self.state_value.get(state) is None:
-                self.state_value[state]= 0
-            self.state_value[state] += self.learning_rate*(self.decay_rate*reward - self.state_value[state])
-            reward = self.state_value[state]
+            return action
+        else:
+            if playerNum == -1:
+                while True:
+                    row = int(input("Input your action row: "))
+                    col = int(input("Input your action col: "))
+                    action = (row, col)
+                    if action in locations:
+                        return action    
+            else:
+                new_board = board.copy()
+                max_value = -99999
+                value = 0
+                for loc in locations:
+                    new_board[loc[0]][loc[1]] = playerNum
+                    boardkey = str(new_board.reshape(3*3))
+                    if self.state_value.get(boardkey):
+                        if value >= max_value:
+                            value = max_value 
+                            action = loc
+                    else:
+                        action = loc
+            return action
                 
-class HumanPlayer:
-    def __init__(self):
-        self.row = 3
-        self.col = 3
-        
-    def nextAction(self, positions):
-        while True:
-            row = int(input("Input your action row:"))
-            col = int(input("Input your action col:"))
-            action = (row, col)
-            if action in positions:
-                return action
-
-    # append a hash state
-    def addState(self, state):
-        pass
-
-    # at the end of game, backpropagate and update states value
-    def feedReward(self, reward):
-        pass
-
-    def reset(self):
-        pass
-
+    def backpropogate_reward(self, reward):
+        if self.train:
+            for state in reversed(self.states):
+                if self.state_value.get(state) is None:
+                    self.state_value[state]= 0
+                self.state_value[state] += self.learning_rate*(self.decay_rate*reward - self.state_value[state])
+                reward = self.state_value[state]
 
     
 if __name__ == "__main__": 
     #Two Agents player1, player2
-    player1 = Player(0.3)
-    player2 = Player(0.3)
+    player1 = Player(0.3, True)               #Set True when training, false when testing against humanplayer
+    player2 = Player(0.3, True)
     
     ttt = tictactoe()
     
@@ -252,10 +251,10 @@ if __name__ == "__main__":
     ttt.learnToPlay(player1, player2, 1000)
     
     print("\n\nTest Learner")
-    player1 = Player(0)
+    player1 = Player(0, False)
     player1.loadQVal("P1_QVal")
     
-    player2 = HumanPlayer()
+    player2 = Player(0, False)
     
     ttt1 = tictactoe()
     ttt1.testPlay(player1, player2)
