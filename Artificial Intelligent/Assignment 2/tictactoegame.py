@@ -85,7 +85,7 @@ class tictactoe:
         else:
             p1.backpropogate_reward(0.1)
             p2.backpropogate_reward(0.5)
-            
+                
     def display(self):
         print(self.board)
         for i in range(0, self.rows):
@@ -166,7 +166,6 @@ class Player:
         self.exploration_rate = exp_rate
         self.decay_rate = 0.999
         self.learning_rate = 0.5
-        self.gamma= 0.9
         self.train = train
         
     def addstate(self, board):
@@ -203,7 +202,7 @@ class Player:
                     boardkey = str(new_board.reshape(3*3))
                     if self.state_value.get(boardkey):
                         if value >= max_value:
-                            value = max_value 
+                            max_value = value 
                             action = loc
                     else:
                         action = loc
@@ -225,7 +224,7 @@ class Player:
                     boardkey = str(new_board.reshape(3*3))
                     if self.state_value.get(boardkey):
                         if value >= max_value:
-                            value = max_value 
+                            max_value = value 
                             action = loc
                     else:
                         action = loc
@@ -236,7 +235,8 @@ class Player:
             for state in reversed(self.states):
                 if self.state_value.get(state) is None:
                     self.state_value[state]= 0
-                self.state_value[state] += self.learning_rate*(self.decay_rate*reward - self.state_value[state])
+                #self.state_value[state] += self.learning_rate*(self.decay_rate*reward - self.state_value[state])
+                self.state_value[state] += self.decay_rate*reward
                 reward = self.state_value[state]
 
     
@@ -248,7 +248,7 @@ if __name__ == "__main__":
     ttt = tictactoe()
     
     print("Teach to Play")
-    ttt.learnToPlay(player1, player2, 1000)
+    ttt.learnToPlay(player1, player2, 10000)
     
     print("\n\nTest Learner")
     player1 = Player(0, False)
