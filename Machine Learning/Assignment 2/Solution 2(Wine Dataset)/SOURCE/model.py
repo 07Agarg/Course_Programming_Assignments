@@ -139,7 +139,7 @@ class Model():
         print("Train Set Accuracy Score (Decision tree classifier): {} ".format(train_accuracy))
         print("Test Set Accuracy Score (Decision tree classifier): {} ".format(self.dec_tree_clf.score(X_test, Y_test)))
         print("F1 Score (Decision tree classifier): {} ".format(f1_score(Y_test, Y_predict, average = 'micro')))
-        print("Execution Time (Decision tree classifier): {0:.5} seconds ".format(end_time - start_time))
+        print("Execution Time (Decision tree classifier): {0:.8f} seconds ".format(end_time - start_time))
         print("Plot ROC Curve for (Decision tree classifier)")
         self.plot_roc("Decision Tree-Depth- " + str(config.DECISION_TREE_DEPTH), self.dec_tree_clf)
         print("\n\n")
