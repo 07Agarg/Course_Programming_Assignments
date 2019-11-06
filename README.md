@@ -16,6 +16,11 @@ This repository contains Programming Assignments :
              * Uniformed Search Algorithms: DFS, BFS.
              * Heuistic Search Algorithms: A*, IDA*
              * Genetic Algorithms: N-Queens
+      2. Assignment 2:
+             * Ant Colony Optimization
+             * Q-Learning applied to Opengym Frozen Lake Environment
+             * Q-Learning applied to Tic-Tac-Toe game. 
+
            
 - ### Digital Image Processing
       1. Assignment 1:
