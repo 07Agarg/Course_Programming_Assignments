@@ -17,9 +17,9 @@ This repository contains Programming Assignments :
              * Heuistic Search Algorithms: A*, IDA*
              * Genetic Algorithms: N-Queens
       2. Assignment 2:
-             * Ant Colony Optimization
+             * Ant Colony for Travelling Salesman Problem
              * Q-Learning applied to Opengym Frozen Lake Environment
-             * Q-Learning applied to Tic-Tac-Toe game. 
+             * Tic tac Toe game using Q-learning
 
            
 - ### Digital Image Processing
