@@ -23,14 +23,19 @@ class neural_network():
         l = len(self.layers)
         for i in range(1, l):
             self.weights.append(np.random.randn(self.layers[i], self.layers[i-1]))
-            self.bias.append(np.zeros(self.layers[i], 1))
+            self.bias.append(np.zeros(self.layers[i], 1))   
             
+    def compute_loss(self, Y_true, Y_predict):
+        loss = np.sum(np.multiply(Y_true, np.log(Y_predict)))
+        loss = -loss/(Y_true.shape[1])
+        return loss
+        
     def sigmoid(self, Z):
         out = 1./(1 + np.exp(-Z))
         return out
     
     def softmax(self, Z):
-        #out
+        out = np.exp(Z)/np.sum(np.exp(Z), axis = 0)
         return out
         
     def forward_pass(self, X):
@@ -39,13 +44,16 @@ class neural_network():
             Z = np.dot(self.weights[i], self.A[i]) + self.bias[i]
             self.Z.append(Z)
             self.A.append(self.sigmoid(Z))
+        #Last layer
         Z = np.dot(self.weights[i], self.A[i])
         self.A.append(self.softmax(Z))
     
     def backward_pass(self, Y):
         self.dZ.append(self.A[-1] - Y)
         
-    
+        
     def model():
         pass
+
+
 
