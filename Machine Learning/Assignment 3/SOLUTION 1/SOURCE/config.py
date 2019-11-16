@@ -27,7 +27,7 @@ TEST_INPUT = "t10k-images-idx3-ubyte.gz"
 TEST_LABELS = "t10k-labels-idx1-ubyte.gz"
 
 #Model Parameters
-LEARNING_RATE = 0.1
-NUM_EPOCHS = 10000
+LEARNING_RATE = 0.9
+NUM_EPOCHS = 5
 
 SEED = 128
