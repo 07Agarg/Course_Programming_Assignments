@@ -14,11 +14,14 @@ DATA_DIR = os.path.join(ROOT_DIR, "DATASET/")
 OUT_DIR = os.path.join(ROOT_DIR, 'RESULT/')
 
 #Dataset Information
-NUM_TRAIN = 50000
+NUM_SAMPLES = 50000
 NUM_TEST = 10000
 IMAGE_SIZE = 28
 CLASSES = 10
-class_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+CLASS_LABELS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+SPLIT_FACTOR = 25
+NUM_VAL = (SPLIT_FACTOR/100.)*NUM_SAMPLES
+NUM_TRAIN = (NUM_SAMPLES - NUM_VAL)
 
 TRAIN_INPUT = "train-images-idx3-ubyte.gz"
 TRAIN_LABELS = "train-labels-idx1-ubyte.gz"
@@ -28,6 +31,6 @@ TEST_LABELS = "t10k-labels-idx1-ubyte.gz"
 
 #Model Parameters
 LEARNING_RATE = 0.9
-NUM_EPOCHS = 5
+NUM_EPOCHS = 50
 
 SEED = 128

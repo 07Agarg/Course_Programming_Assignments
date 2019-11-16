@@ -61,10 +61,10 @@ class Data:
         if not train:
             self.read_buffer(f_input, f_labels, config.NUM_TEST, train)
     
-    def get_train(self):
+    def get_data(self):
         #return self.dataX[:10000], self.dataY[:10000]
         return self.dataX, self.dataY
     
-    def get_test(self):
-        #return self.dataX[:10000], self.dataY[:10000]
-        return self.dataX, self.dataY
+#    def get_test(self):
+#        #return self.dataX[:10000], self.dataY[:10000]
+#        return self.dataX, self.dataY
