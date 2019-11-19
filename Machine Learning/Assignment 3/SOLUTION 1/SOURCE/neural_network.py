@@ -119,13 +119,9 @@ class Network:
         X_train, Y_train = X_train.T, Y_train.T
         X_val, Y_val = X_val.T, Y_val.T
         
-        print(Y_train.shape)
-        print("n classes: ", config.CLASSES)
         Y_train_encoded = np.eye(config.CLASSES)[Y_train.astype('int32')].T.reshape(config.CLASSES, Y_train.shape[1])
         Y_val_encoded = np.eye(config.CLASSES)[Y_val.astype('int32')].T.reshape(config.CLASSES, Y_val.shape[1])
         
-        print(Y_train_encoded.shape)
-
         #Initialize parameters
         self.initialize_parameters()
         
@@ -186,13 +182,13 @@ class Network:
         self.classifier = mlp.fit(X, Y)
         #Y_predict_proba = classifier.predict_proba(X)
         train_accuracy = self.classifier.score(X, Y)
-        print("Accuracy Score(Using Sklearn): {} ".format(train_accuracy))
+        print("Accuracy Score for train set (Using Sklearn): {} ".format(train_accuracy))
         train_loss = self.classifier.loss_
-        print("Loss(Using Sklearn): {} ".format(train_loss))
+        print("Loss on training set (Using Sklearn): {} ".format(train_loss))
         
     def sklearn_test(self, X, Y):
         test_accuracy = self.classifier.score(X, Y)
-        print("Accuracy Score(Using Sklearn): {} ".format(test_accuracy))
+        print("Accuracy Score for test set (Using Sklearn): {} ".format(test_accuracy))
     
     def plot_cost(self, string):
         x = np.arange(config.NUM_EPOCHS)
