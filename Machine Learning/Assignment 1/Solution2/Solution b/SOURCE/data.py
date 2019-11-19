@@ -56,8 +56,8 @@ class Data:
     
     def get_train(self):
         #return self.dataX[:10000], self.dataY[:10000]
-        return self.dataX, self.dataY
+        return self.dataX[:100], self.dataY[:100]
     
     def get_test(self):
         #return self.dataX[:10000], self.dataY[:10000]
-        return self.dataX, self.dataY
+        return self.dataX[:100], self.dataY[:100]

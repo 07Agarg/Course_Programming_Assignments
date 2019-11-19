@@ -14,7 +14,7 @@ if __name__ == "__main__":
     #print("Start")
     data = data.Data()
     #Read train 
-    
+    """
     #L1 Regularization
     data.read(config.TRAIN_INPUT, config.TRAIN_LABELS, True)
     print("Train data read successfully")
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     model.LogisticReg_L2_test(data)
     print("Testing Using L2 Regularization")
     """
-    """
+    
     data.read(config.TRAIN_INPUT, config.TRAIN_LABELS, True)
     print("Train data read successfully")
     model = model.Model(data.size)

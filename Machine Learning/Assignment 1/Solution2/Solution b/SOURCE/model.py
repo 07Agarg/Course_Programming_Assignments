@@ -93,6 +93,7 @@ class Model():
     def LogisticReg_L2_test(self, data):
         X_test, y_test = data.get_test()
         y_predict = self.classifier.predict_proba(X_test)
+        print("y_predict shape: ", y_predict.shape)
         self.predict = y_predict
         cm = confusion_matrix(y_test, self.classifier.predict(X_test))
         print("Confusion Matrix For test set")
