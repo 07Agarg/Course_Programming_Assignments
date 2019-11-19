@@ -28,7 +28,7 @@ class Network:
         self.accuracy_list_train = []
         self.accuracy_list_val = []
         self.n_examples = n_examples
-    
+        self.classifier = None
     def __reset(self):
         self.dW = []
         self.dB = []
@@ -116,9 +116,6 @@ class Network:
         X_train, Y_train = X[:config.NUM_TRAIN], Y[:config.NUM_TRAIN]
         X_val, Y_val = X[config.NUM_TRAIN:], Y[config.NUM_TRAIN:]
         
-        for i in range(10):
-            print(Y_train[i])
-            
         X_train, Y_train = X_train.T, Y_train.T
         X_val, Y_val = X_val.T, Y_val.T
         
@@ -182,17 +179,20 @@ class Network:
             print("{} Set Accuracy {}".format(string, (accuracy/Y.shape[0])*100))
     
     def save_weights(self):
-        print(np.shape(self.weights))
         np.save(os.path.join(config.OUT_DIR, config.WEIGHTS_FILE), self.weights)
     
     def sklearn_train(self, X, Y):
         mlp = MLPClassifier(hidden_layer_sizes = (100, 50, 50), activation = 'logistic', solver = 'sgd', max_iter = config.NUM_EPOCHS, learning_rate_init = config.LEARNING_RATE)
-        classifier = mlp.fit(X, Y)
+        self.classifier = mlp.fit(X, Y)
         #Y_predict_proba = classifier.predict_proba(X)
-        train_accuracy = classifier.score(X, Y)
+        train_accuracy = self.classifier.score(X, Y)
         print("Accuracy Score(Using Sklearn): {} ".format(train_accuracy))
-        train_loss = classifier.loss_
+        train_loss = self.classifier.loss_
         print("Loss(Using Sklearn): {} ".format(train_loss))
+        
+    def sklearn_test(self, X, Y):
+        test_accuracy = self.classifier.score(X, Y)
+        print("Accuracy Score(Using Sklearn): {} ".format(test_accuracy))
     
     def plot_cost(self, string):
         x = np.arange(config.NUM_EPOCHS)
@@ -224,7 +224,7 @@ class Network:
         weights = np.load(file + ".npy", allow_pickle = True)
         print(type(weights))
         tsne = manifold.TSNE(n_components = 2)        
-        print("weights shape: ", weights.shape)
+        print("weights shape: ", weights[-1].shape)
         transformed_weights = tsne.fit_transform(weights[-1])
         plt.scatter(transformed_weights[0], transformed_weights[1], cmap = plt.cm.rainbow)
         plt.title('T-SNE Plot')

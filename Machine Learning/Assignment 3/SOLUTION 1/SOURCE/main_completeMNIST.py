@@ -42,4 +42,5 @@ if __name__ == "__main__":
     print(Y_test.shape)
     network.test(X_test.T, Y_test.T)
      
-    #network.sklearn_train(X, Y)
+    network.sklearn_train(X, Y)
+    network.sklearn_test(X_test, Y_test)

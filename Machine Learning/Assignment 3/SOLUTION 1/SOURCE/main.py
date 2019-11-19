@@ -23,10 +23,9 @@ if __name__ == "__main__":
     
     config.CLASS_LABELS = np.unique(Y_)
     config.CLASSES = len(config.CLASS_LABELS)
-    print(config.CLASS_LABELS)
-    print(config.CLASSES)
     
     network = neural_network.Network(config.NUM_TRAIN, config.IMAGE_SIZE*config.IMAGE_SIZE, len(config.CLASS_LABELS))
+
     network.train(X_, Y_)    
  #    #print("Complete model training")
 
@@ -43,5 +42,6 @@ if __name__ == "__main__":
      
     print("Read Test Data")
     network.test(X_test.T, Y_test.T)
-      
-#     #network.sklearn_train(X, Y)
+
+    network.sklearn_train(X_, Y_)
+    network.sklearn_test(X_test, Y_test)

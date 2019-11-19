@@ -63,6 +63,7 @@ class Data:
         Y = data['Y'][:]
         X = X.reshape(X.shape[0], -1)
         Y = Y.reshape(Y.shape[0], 1)
+        X = X/255.
         print(X.shape)
         print(Y.shape)
         return X, Y
