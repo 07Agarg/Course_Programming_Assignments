@@ -104,4 +104,4 @@ class Model():
         plt.xlabel('Epochs')
         plt.title('Error vs Epochs Plot')
         plt.savefig(config.OUT_DIR + 'Error_Plot.jpg')
-        
+        plt.show()       

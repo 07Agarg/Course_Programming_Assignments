@@ -133,4 +133,3 @@ class Data:
         test = pd.DataFrame(self.val_set)
         train.to_csv(os.path.join(config.DATASET_OUTDIR, "Train.csv"), sep = ' ', header = False, index = False)
         test.to_csv(os.path.join(config.DATASET_OUTDIR, "Test.csv"), sep = ' ', header = False, index = False)
-    

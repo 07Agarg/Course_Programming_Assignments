@@ -9,6 +9,7 @@ import os
 import h5py
 import config
 import numpy as np
+import gzip
 from sklearn.preprocessing import StandardScaler
 
 class Data:
@@ -44,15 +45,15 @@ class Data:
         self.dataX = self.dataX.reshape(self.dataX.shape[0], -1)        
         self.dataX = scaler.fit_transform(self.dataX)
     
-#    def read(self, inputs, labels, train = True):
-#        f_input = gzip.open(os.path.join(config.DATA_DIR, inputs),'r')
-#        f_labels = gzip.open(os.path.join(config.DATA_DIR, labels),'r')
-#
-#        if train:
-#            self.read_buffer(f_input, f_labels, config.NUM_SAMPLES, train)
-#            
-#        if not train:
-#            self.read_buffer(f_input, f_labels, config.NUM_TEST, train)
+    def read_full(self, inputs, labels, train = True):
+        f_input = gzip.open(os.path.join(config.DATA_DIR, inputs),'r')
+        f_labels = gzip.open(os.path.join(config.DATA_DIR, labels),'r')
+
+        if train:
+            self.read_buffer(f_input, f_labels, config.NUM_SAMPLES, train)
+            
+        if not train:
+            self.read_buffer(f_input, f_labels, config.NUM_TEST, train)
         
     def read(self, input_file):
         filename = os.path.join(config.DATA_DIR, 'MNIST_Subset.h5')
@@ -65,11 +66,8 @@ class Data:
         print(X.shape)
         print(Y.shape)
         return X, Y
-#            
-#    def get_data(self):
-#        #return self.dataX[:10000], self.dataY[:10000]
-#        return self.dataX, self.dataY
-#    
-#    def get_test(self):
-#        #return self.dataX[:10000], self.dataY[:10000]
-#        return self.dataX, self.dataY
+            
+    def get_data(self):
+        #return self.dataX[:10000], self.dataY[:10000]
+        return self.dataX, self.dataY
+    

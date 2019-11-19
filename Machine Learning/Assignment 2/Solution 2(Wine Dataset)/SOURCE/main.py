@@ -20,13 +20,13 @@ if __name__ == "__main__":
     model.preprocess_data()
     #model.visualize_data()
 #    #Train using SVM CLassifier_One Vs One
-    model.linearsvc_ovo()
+    #model.linearsvc_ovo()
     #print("SVM trained model-One Vs One")
 ##    #Train using SVM CLassifier_One Vs One    
-    model.linearsvc_ovr()
+    #model.linearsvc_ovr()
     #print("SVM trained model-One Vs Rest")
 #   Train using Gaussian Naive Bayes Classifier
-    model.naive_bayes()
+    #model.naive_bayes()
     #print("Naive Bayes trained model")
     #Train using Decision trees Classifier
     model.decision_trees()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov 13 12:43:55 2019
+Created on Tue Nov 19 08:43:41 2019
 
 @author: Ashima
 """
@@ -12,24 +12,16 @@ import numpy as np
 import neural_network
 
 if __name__ == "__main__":
+    #print("Start")
     data = data.Data()
-    X, Y = data.read(config.MNIST_FILE)
-    
-    Y = np.where(Y == 7, 0, 1)              ##Important to change Y as 0 where it is 7, Y as 1 where it is 9
+    data.read_full(config.TRAIN_INPUT, config.TRAIN_LABELS, True)
     print("Train data read successfully")
     
-    X_, Y_ = X[:-config.NUM_TEST], Y[:-config.NUM_TEST]
-    X_test, Y_test = X[config.NUM_TRAIN+config.NUM_VAL:], Y[config.NUM_TRAIN+config.NUM_VAL:]
+    X, Y = data.get_data()
     
-    config.CLASS_LABELS = np.unique(Y_)
-    config.CLASSES = len(config.CLASS_LABELS)
-    print(config.CLASS_LABELS)
-    print(config.CLASSES)
-    
-    network = neural_network.Network(config.NUM_TRAIN, config.IMAGE_SIZE*config.IMAGE_SIZE, len(config.CLASS_LABELS))
-    network.train(X_, Y_)    
+    network = neural_network.Network(config.NUM_TRAIN, config.IMAGE_SIZE*config.IMAGE_SIZE, config.CLASSES)
+    network.train(X, Y)    
  #    #print("Complete model training")
-
     print("Accuracy Plot for Train")
     network.plot_accuracy('Train')
     print("Error Plot for Train")
@@ -41,7 +33,13 @@ if __name__ == "__main__":
     print("Plot T-SNE")
     network.plot_tsne()
      
+ #   Test on Holdout Set
+    data.read_full(config.TEST_INPUT, config.TEST_LABELS, False)
+    X_test, Y_test = data.get_data()
+     
     print("Read Test Data")
+    print(X_test.shape)
+    print(Y_test.shape)
     network.test(X_test.T, Y_test.T)
-      
-#     #network.sklearn_train(X, Y)
+     
+    #network.sklearn_train(X, Y)

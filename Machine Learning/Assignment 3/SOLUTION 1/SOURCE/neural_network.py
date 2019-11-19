@@ -13,10 +13,10 @@ from sklearn import manifold
 from sklearn.neural_network import MLPClassifier
 
 class Network:
-    def __init__(self, n_examples, h1):
+    def __init__(self, n_examples, h1, out):
         self.weights = []
         self.bias = []
-        self.layers = [h1, 100, 50, 50, 10]
+        self.layers = [h1, 100, 50, 50, out]
         self.Z = []
         self.A = []
         self.Z_val = []
@@ -116,13 +116,23 @@ class Network:
         X_train, Y_train = X[:config.NUM_TRAIN], Y[:config.NUM_TRAIN]
         X_val, Y_val = X[config.NUM_TRAIN:], Y[config.NUM_TRAIN:]
         
+        for i in range(10):
+            print(Y_train[i])
+            
         X_train, Y_train = X_train.T, Y_train.T
         X_val, Y_val = X_val.T, Y_val.T
         
+        print(Y_train.shape)
+        print("n classes: ", config.CLASSES)
         Y_train_encoded = np.eye(config.CLASSES)[Y_train.astype('int32')].T.reshape(config.CLASSES, Y_train.shape[1])
         Y_val_encoded = np.eye(config.CLASSES)[Y_val.astype('int32')].T.reshape(config.CLASSES, Y_val.shape[1])
+        
+        print(Y_train_encoded.shape)
 
+        #Initialize parameters
         self.initialize_parameters()
+        
+        #Start training
         for epoch in range(config.NUM_EPOCHS):
             self.forward_pass(X_train)
             train_loss = self.compute_loss(Y_train_encoded, self.A[-1])
@@ -137,6 +147,7 @@ class Network:
             self.calculate_accuracy(X_train, Y_train, "None", True)    
             self.calculate_accuracy(X_val, Y_val, "None", False)
             
+        #Calculate overall accuracy and loss
         self.calculate_accuracy(X_train, Y_train, "Train", True)
         print("Final Train Loss: {}".format(train_loss))
         self.calculate_accuracy(X_val, Y_val, "Validation", False)
@@ -171,7 +182,7 @@ class Network:
             print("{} Set Accuracy {}".format(string, (accuracy/Y.shape[0])*100))
     
     def save_weights(self):
-        print(type(self.weights))
+        print(np.shape(self.weights))
         np.save(os.path.join(config.OUT_DIR, config.WEIGHTS_FILE), self.weights)
     
     def sklearn_train(self, X, Y):
@@ -192,7 +203,7 @@ class Network:
         plt.ylabel('Loss')
         plt.xlabel('Iterations')
         plt.title("Loss vs Iterations Plot(" + string + ")")
-        plt.savefig(config.OUT_DIR + 'Loss_Curve_' + string + '.jpg')
+        #plt.savefig(config.OUT_DIR + 'Loss_Curve_' + string + '.jpg')
         plt.show()
         
     def plot_accuracy(self, string):
@@ -204,7 +215,7 @@ class Network:
         plt.ylabel('Accuracy')
         plt.xlabel('Epochs')
         plt.title("Accuracy vs Iterations Plot(" + string + ")")
-        plt.savefig(config.OUT_DIR + 'Accuracy_Plot_' + string + '.jpg')
+        #plt.savefig(config.OUT_DIR + 'Accuracy_Plot_' + string + '.jpg')
         plt.show()
         
     def plot_tsne(self):
@@ -217,7 +228,7 @@ class Network:
         transformed_weights = tsne.fit_transform(weights[-1])
         plt.scatter(transformed_weights[0], transformed_weights[1], cmap = plt.cm.rainbow)
         plt.title('T-SNE Plot')
-        plt.savefig(config.OUT_DIR + 'T-SNE Plot')
+        #plt.savefig(config.OUT_DIR + 'T-SNE Plot')
         plt.show()
 
 
