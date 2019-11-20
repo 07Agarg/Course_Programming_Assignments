@@ -12,3 +12,5 @@ Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/data_batch_3
 *.pyc
 *.pyc
 *.meta
+Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/test_batch
+*.pyc
