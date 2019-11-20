@@ -1,1 +1,14 @@
 .pyc
+*.pickle
+*.gz
+*.names
+*.data
+*.pyc
+Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/data_batch_5
+Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/data_batch_4
+Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/data_batch_2
+Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/data_batch_1
+Machine Learning/Assignment 2/Solution 1/DATASET/cifar-10-python/data_batch_3
+*.pyc
+*.pyc
+*.meta
