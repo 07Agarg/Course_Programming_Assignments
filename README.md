@@ -6,10 +6,13 @@ This repository contains Programming Assignments :
              * Linear Regression
              * Logistic Regression
       2. Assignment 2:
-            * SVM
+            * SVM trained on features extracted using HOG. 
             * Gaussian Naive Bayes
             * Decision Trees
             * Comparison Plots
+      3. Assignment 3:
+            * Neural Network from scratch. 
+            * SVM trained on feature extracted using Pytorch AlexNet.
 
 - ### Artificial Intelligence
       1. Assignment 1:
