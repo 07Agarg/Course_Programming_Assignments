@@ -56,7 +56,7 @@ class Data:
             self.read_buffer(f_input, f_labels, config.NUM_TEST, train)
         
     def read(self, input_file):
-        filename = os.path.join(config.DATA_DIR, 'MNIST_Subset.h5')
+        filename = os.path.join(config.DATA_DIR, config.MNIST_FILE)
         data = h5py.File(filename, 'r+') 
         print(np.shape(data))
         X = data['X'][:]

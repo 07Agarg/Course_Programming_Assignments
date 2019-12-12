@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     network = neural_network.Network(config.NUM_TRAIN, config.IMAGE_SIZE*config.IMAGE_SIZE, config.CLASSES)
     network.train(X, Y)    
- #    #print("Complete model training")
+#   print("Complete model training")
     print("Accuracy Plot for Train")
     network.plot_accuracy('Train')
     print("Error Plot for Train")
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     print("Plot T-SNE")
     network.plot_tsne()
      
- #   Test on Holdout Set
+#   Test on Holdout Set
     data.read_full(config.TEST_INPUT, config.TEST_LABELS, False)
     X_test, Y_test = data.get_data()
      

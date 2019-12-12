@@ -25,26 +25,11 @@ CLASSES = 10
 CHANNELS = 3
 
 NUM_SAMPLES = 10000
-NUM_TEST = 10000 
-SPLIT_FACTOR = 25
-NUM_VAL = (SPLIT_FACTOR/100.)*NUM_SAMPLES
-NUM_TRAIN = int(NUM_SAMPLES - NUM_VAL)
-
-#Model Parameters
-LEARNING_RATE = 0.9
-NUM_EPOCHS = 50
+NUM_TEST = 2000 
+#SPLIT_FACTOR = 25
+#NUM_VAL = (SPLIT_FACTOR/100.)*NUM_SAMPLES
+#NUM_TRAIN = int(NUM_SAMPLES - NUM_VAL)
 
 SEED = 128
 
 CLASS_LABELS = [0, 1]
-#CLASS_LABELS = {0: 'airplane', 1: 'automobile', 2: 'bird', 3: 'cat', 4: 'deer', 5: 'dog', 6: 'frog', 7: 'horse', 8: 'ship', 9: 'truck'}
-#airplane : 0
-#automobile : 1
-#bird : 2
-#cat : 3
-#deer : 4
-#dog : 5
-#frog : 6
-#horse : 7
-#ship : 8
-#truck : 9

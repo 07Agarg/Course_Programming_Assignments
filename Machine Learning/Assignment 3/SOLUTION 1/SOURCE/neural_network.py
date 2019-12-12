@@ -10,6 +10,10 @@ import config
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import manifold
+import pandas as pd
+import time as time
+from sklearn.manifold import TSNE
+import seaborn as sns
 from sklearn.neural_network import MLPClassifier
 
 class Network:
@@ -29,6 +33,7 @@ class Network:
         self.accuracy_list_val = []
         self.n_examples = n_examples
         self.classifier = None
+		
     def __reset(self):
         self.dW = []
         self.dB = []
@@ -178,13 +183,17 @@ class Network:
         np.save(os.path.join(config.OUT_DIR, config.WEIGHTS_FILE), self.weights)
     
     def sklearn_train(self, X, Y):
-        mlp = MLPClassifier(hidden_layer_sizes = (100, 50, 50), activation = 'logistic', solver = 'sgd', max_iter = config.NUM_EPOCHS, learning_rate_init = config.LEARNING_RATE)
+        n_samples = Y.shape[0]
+        print("n_samples: ", n_samples)
+        mlp = MLPClassifier(hidden_layer_sizes = (100, 50, 50), activation = 'logistic', solver = 'sgd', max_iter = config.NUM_EPOCHS, learning_rate_init = config.LEARNING_RATE, learning_rate = 'constant',shuffle = False)
         self.classifier = mlp.fit(X, Y)
         #Y_predict_proba = classifier.predict_proba(X)
         train_accuracy = self.classifier.score(X, Y)
         print("Accuracy Score for train set (Using Sklearn): {} ".format(train_accuracy))
         train_loss = self.classifier.loss_
         print("Loss on training set (Using Sklearn): {} ".format(train_loss))
+        out_activation = self.classifier.out_activation_
+        print("Output Activation function is: ", out_activation)
         
     def sklearn_test(self, X, Y):
         test_accuracy = self.classifier.score(X, Y)
@@ -214,19 +223,6 @@ class Network:
         #plt.savefig(config.OUT_DIR + 'Accuracy_Plot_' + string + '.jpg')
         plt.show()
         
-    def plot_tsne(self):
-        file = os.path.join(config.OUT_DIR, config.WEIGHTS_FILE)
-        print(file)
-        weights = np.load(file + ".npy", allow_pickle = True)
-        print(type(weights))
-        tsne = manifold.TSNE(n_components = 2)        
-        print("weights shape: ", weights[-1].shape)
-        transformed_weights = tsne.fit_transform(weights[-1])
-        plt.scatter(transformed_weights[0], transformed_weights[1], cmap = plt.cm.rainbow)
-        plt.title('T-SNE Plot')
-        #plt.savefig(config.OUT_DIR + 'T-SNE Plot')
-        plt.show()
-
 
         
         

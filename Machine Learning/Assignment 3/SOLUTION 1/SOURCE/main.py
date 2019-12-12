@@ -8,6 +8,7 @@ Created on Wed Nov 13 12:43:55 2019
 import data
 import config
 import random
+import utils
 import numpy as np
 import neural_network
 
@@ -23,12 +24,11 @@ if __name__ == "__main__":
     
     config.CLASS_LABELS = np.unique(Y_)
     config.CLASSES = len(config.CLASS_LABELS)
-    
+
     network = neural_network.Network(config.NUM_TRAIN, config.IMAGE_SIZE*config.IMAGE_SIZE, len(config.CLASS_LABELS))
 
     network.train(X_, Y_)    
- #    #print("Complete model training")
-
+ 
     print("Accuracy Plot for Train")
     network.plot_accuracy('Train')
     print("Error Plot for Train")
@@ -38,10 +38,10 @@ if __name__ == "__main__":
     print("Error Plot for Validation")
     network.plot_cost('Validation')
     print("Plot T-SNE")
-    network.plot_tsne()
+    utils.plot_tsne()
      
     print("Read Test Data")
     network.test(X_test.T, Y_test.T)
 
-    network.sklearn_train(X_, Y_)
-    network.sklearn_test(X_test, Y_test)
+    #network.sklearn_train(X_, Y_)
+    #network.sklearn_test(X_test, Y_test)
